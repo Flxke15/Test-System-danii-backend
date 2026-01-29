@@ -5,6 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Global prefix สำหรับยังไม่ได้ขึ้น server
   app.setGlobalPrefix('api');
 
   // Swagger config

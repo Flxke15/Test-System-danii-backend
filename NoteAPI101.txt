@@ -1,0 +1,46 @@
+- API
+setup 101
+$ npm i -g @nestjs/cli ( กรณียังไม่มี nest ในเครื่อง )
+$ nest new project-name ( สร้าง project โดย project-name เป็นชื่อ Folder )
+$ nest g res [name] -- สร้าง Folder ของ Model นั้นๆ (controller, services, module)
+
+- Swagger
+$ npm install --save @nestjs/swagger
+setup in file main.ts
+
+- Sequelize
+npm i @nestjs/sequelize sequelize sequelize-typescript pg pg-hstore
+npm i @nestjs/config
+
+- Validator (ไว้เขียนใน dto)
+npm i class-validator
+
+- Json Web Token (JWT)
+npm install @nestjs/jwt @nestjs/passport passport passport-jwt bcrypt
+npm install -D @types/passport-jwt @types/bcrypt
+
+- Exception
+import { 
+  BadRequestException,      // 400
+  UnauthorizedException,    // 401
+  ForbiddenException,       // 403
+  NotFoundException,        // 404
+  ConflictException,        // 409
+  UnprocessableEntityException, // 422
+  InternalServerErrorException  // 500
+} from '@nestjs/common';
+
+- Flow Login
+1. POST /users (สมัครสมาชิก)
+   → รับ password → hash ด้วย bcrypt → เก็บลง DB
+
+2. POST /auth/login (เข้าสู่ระบบ)
+   → รับ email + password
+   → ดึง user จาก DB
+   → bcrypt.compare(password, hashedPassword)
+   → ถ้าตรง → สร้าง JWT token → ส่งกลับ
+
+3. GET /users (ต้อง login)
+   → ส่ง Header: Authorization: Bearer <token>
+   → JwtAuthGuard verify token
+   → ถ้า valid → อนุญาตให้เข้าถึง

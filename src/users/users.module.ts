@@ -10,5 +10,6 @@ import { SequelizeModule } from '@nestjs/sequelize';
   ],
   controllers: [UsersController],
   providers: [UsersService],
+  exports: [UsersService], // ต้อง export เพื่อให้ module อื่นใช้ได้
 })
 export class UsersModule {}
