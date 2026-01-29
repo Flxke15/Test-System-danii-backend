@@ -11,7 +11,7 @@ async function bootstrap() {
   app.use(cookieParser()); // ใช้ cookie-parser middleware
 
   // Global prefix สำหรับยังไม่ได้ขึ้น server
-  app.setGlobalPrefix('api');
+  // app.setGlobalPrefix('api');
 
   // Swagger config
   const config = new DocumentBuilder()
