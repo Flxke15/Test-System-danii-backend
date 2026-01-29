@@ -44,3 +44,10 @@ import {
    → ส่ง Header: Authorization: Bearer <token>
    → JwtAuthGuard verify token
    → ถ้า valid → อนุญาตให้เข้าถึง
+
+- Cookie
+npm install cookie-parser
+npm install -D @types/cookie-parser
+// Usage
+import cookieParser from 'cookie-parser';
+app.use(cookieParser()); // เพิ่มบรรทัดนี้ main.ts

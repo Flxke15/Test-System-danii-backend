@@ -1,8 +1,9 @@
-import { Controller, Post, Body, Res, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpCode, HttpStatus, UseGuards, Get, Req } from '@nestjs/common';
 import * as express from 'express';
 import { AuthService } from './auth.service';
 
 import { LoginDto } from './dto/auth.dto';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -21,9 +22,13 @@ export class AuthController {
       maxAge: 24 * 60 * 60 * 1000, // 1 วัน
     });
     
-    return res.json({ user: result.user });
+    return res.json({
+      status: 'success',
+      user: result.user
+    });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   logout(@Res() res: express.Response) {
@@ -35,5 +40,12 @@ export class AuthController {
     });
 
     return res.json({ message: 'ออกจากระบบสำเร็จ' });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('getProfile')
+  async getProfile(@Req() req: express.Request) {
+    // req.user มาจาก JwtStrategy.validate()
+    return this.authService.getProfile((req as any).user['userId']);
   }
 }

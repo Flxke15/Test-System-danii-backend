@@ -85,8 +85,13 @@ export class UsersService {
     });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    return this.userModel.findOne({
+      attributes: {
+        exclude: ['password']
+      },
+      where: { id: id },
+    });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
